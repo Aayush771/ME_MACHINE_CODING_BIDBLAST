@@ -44,7 +44,7 @@ public class BidService {
      }
     
       public String declareWinner(Long eventId){
-         eventRepository.existsById(eventId).orElseThrow(()-> new MemberNotFoundException("Event Not Found"));
+      //   eventRepository.existsById(eventId).orElseThrow(()-> new MemberNotFoundException("Event Not Found"));
          
          List<Bids> bidsList = bidsRepository.findAll();
          List<Bids> eventBids = new ArrayList<>();

@@ -3,10 +3,7 @@
  */
 package com.example.demo;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -41,10 +38,13 @@ public class App {
     private final MemberService memberService = new MemberService(memberRepository);
     private final IEventRepository eventRepository = new EventRepository();
     private final EventService eventService = new EventService(eventRepository);
-    private final MemberRegisterRepository memberRegisterRepository = new MemberRegisterRepository();
-    private final MemberRegisterService memberRegisterService = new MemberRegisterService(memberRegisterRepository, memberRepository, eventRepository);
+    private final MemberRegisterRepository memberRegisterRepository =
+            new MemberRegisterRepository();
+    private final MemberRegisterService memberRegisterService =
+            new MemberRegisterService(memberRegisterRepository, memberRepository, eventRepository);
     private final IBidsRepository bidsRepository = new BidsRepository();
-    private final BidService bidService = new BidService(bidsRepository, memberRepository, eventRepository);
+    private final BidService bidService =
+            new BidService(bidsRepository, memberRepository, eventRepository);
 
     // Initialize services
     private final GreetingService greetingService = new GreetingService(greetingRepository);
@@ -60,12 +60,12 @@ public class App {
                 List<String> file_commands = Files.readAllLines(Paths.get(inputFile));
                 // Execute the commands
                 new App().run(file_commands);
-//                deleteExtraSpace();
+                // deleteExtraSpace();
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
+
             return;
         }
 
@@ -87,7 +87,7 @@ public class App {
 
     public void run(List<String> commands) {
 
-       // System.out.println(commands);
+        // System.out.println(commands);
 
         Iterator<String> it = commands.iterator();
         while (it.hasNext()) {
@@ -101,14 +101,14 @@ public class App {
                 // Execute Services
                 switch (tokens.get(0)) {
                     // case "CREATE_GREETING":
-                    //     CREATE_GREETING(tokens);
-                    //     break;
+                    // CREATE_GREETING(tokens);
+                    // break;
                     // case "LIST_GREETING":
-                    //     LIST_GREETING(tokens);
-                    //     break;
+                    // LIST_GREETING(tokens);
+                    // break;
                     // case "GET_GREETING":
-                    //     GET_GREETING(tokens);
-                    //     break;
+                    // GET_GREETING(tokens);
+                    // break;
                     case "ADD_MEMBER":
                         ADD_MEMBER(tokens);
                         break;
@@ -122,14 +122,14 @@ public class App {
                         SUBMIT_BID(tokens);
                         break;
                     case "DECLARE_WINNER":
-                      DECLARE_WINNER(tokens);
-                      break;
+                        DECLARE_WINNER(tokens);
+                        break;
                     // Add More case statements below to support other commands
-                    
+
                     default:
                         throw new RuntimeException("INVALID_COMMAND");
                 }
- //               deleteExtraSpace();
+                // deleteExtraSpace();
             } catch (Exception e) {
                 System.out.println("ERROR: " + e.getMessage());
             }
@@ -158,30 +158,31 @@ public class App {
     }
 
     private void ADD_MEMBER(List<String> tokens) {
-       Members member = memberService.AddMembers(tokens);
+        Members member = memberService.AddMembers(tokens);
 
-        System.out.println("MEMBER_ADDED "+member.getId());
+        System.out.println("MEMBER_ADDED " + member.getId());
     }
 
     // LIST_GREETING
     private void ADD_EVENT(List<String> tokens) {
         Event event = eventService.addEvent(tokens);
-        System.out.println("EVENT_ADDED "+event.getId());
+        System.out.println("EVENT_ADDED " + event.getId());
     }
 
     // GET_GREETING
     private void REGISTER_MEMBER(List<String> tokens) {
 
         try {
-            RegistrationResult registrationResult = memberRegisterService.registerMember(tokens); 
-            System.out.println("MEMBER_REGISTERED "+registrationResult.getMemberName()+" "+ registrationResult.getEventName());
+            RegistrationResult registrationResult = memberRegisterService.registerMember(tokens);
+            System.out.println("MEMBER_REGISTERED " + registrationResult.getMemberName() + " "
+                    + registrationResult.getEventName());
 
         } catch (Exception e) {
-            //TODO: handle exception
-
+            // TODO: handle exception
             System.out.println(e.getMessage());
         }
-     // System.out.println("MEMBER_REGISTERED "+registrationResult.getEventName()+ registrationResult.getEventName());
+        // System.out.println("MEMBER_REGISTERED "+registrationResult.getEventName()+
+        // registrationResult.getEventName());
     }
 
     private void SUBMIT_BID(List<String> tokens) {
@@ -190,23 +191,23 @@ public class App {
             System.out.println("BIDS_SUBMITTED");
 
         } catch (Exception e) {
-            //TODO: handle exception
+            // TODO: handle exception
 
             System.out.println(e.getMessage());
         }
     }
 
     private void DECLARE_WINNER(List<String> tokens) {
+
+
+        
+            String name = bidService.declareWinner(Long.parseLong(tokens.get(1)));
+            System.out.print(name);
+        
+            // TODO: handle exception
+          //  System.out.println(e.getMessage());
         
 
-        try {
-            String name =   bidService.declareWinner(Long.parseLong(tokens.get(1)));
-            System.out.print(name);
-        } catch (Exception e) {
-            //TODO: handle exception
-            System.out.println(e.getMessage());
-        }
-  
     }
 }
 
