@@ -27,9 +27,8 @@ public class MemberRegisterService {
 
         Long memberId = Long.parseLong(values.get(1));
         Long eventId = Long.parseLong(values.get(2));
-         memberRepository.existsById(memberId).orElseThrow(()-> new MemberNotFoundException("Member Not Found"));
-         eventRepository.existsById(eventId).orElseThrow(()-> new MemberNotFoundException("Event Not Found"));
-
+        memberRepository.existsById(memberId).orElseThrow(()-> new MemberNotFoundException("MEMBER_NOT_EXIST"));
+        eventRepository.existsById(eventId).orElseThrow(()-> new MemberNotFoundException("EVENT_NOT_EXIST"));
          Members member = memberRepository.findMemberById(memberId);
          Event event = eventRepository.findEventById(eventId);
          

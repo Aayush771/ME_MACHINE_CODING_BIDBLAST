@@ -48,5 +48,11 @@ public class MemberRepository implements IMemberRepository {
     public Optional<Boolean> existsById(Long id) {
         return Optional.ofNullable(membersMap.containsKey(id));
     }
-    
+    @Override
+    public Members updateMember(Members members) {
+        // TODO Auto-generated method stub
+
+        return  membersMap.put(members.getId(), members);
+        
+    }
 }

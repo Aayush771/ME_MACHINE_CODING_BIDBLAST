@@ -22,8 +22,8 @@ public class BidService {
 
         Long memberId = Long.parseLong(values.get(1));
         Long eventId = Long.parseLong(values.get(2));
-        memberRepository.existsById(memberId).orElseThrow(()-> new MemberNotFoundException("Member Not Found"));
-        eventRepository.existsById(eventId).orElseThrow(()-> new MemberNotFoundException("Event Not Found"));
+        memberRepository.existsById(memberId).orElseThrow(()-> new MemberNotFoundException("MEMBER_NOT_EXIST"));
+        eventRepository.existsById(eventId).orElseThrow(()-> new MemberNotFoundException("EVENT_NOT_EXIST"));
   //      List<Long> bidAmounts = new ArrayList<>();
         Members member = memberRepository.findMemberById(memberId);
       Long maxValue = (long) 0;  
@@ -36,7 +36,9 @@ public class BidService {
             }else throw new MemberNotFoundException("You don't have enough crioCoins "+value);
             
          } 
-
+          Long dedutedCoin = member.getCrioCoins()-maxValue;
+          member.setCrioCoins(dedutedCoin);
+          memberRepository.updateMember(member);
         // Collections.sort(bidAmounts);
         return bidsRepository.saveBids(new Bids(memberId, eventId, maxValue));
      }
