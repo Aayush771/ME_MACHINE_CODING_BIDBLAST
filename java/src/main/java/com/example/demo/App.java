@@ -92,7 +92,7 @@ public class App {
         Iterator<String> it = commands.iterator();
         while (it.hasNext()) {
             String line = it.next();
-            if (line == null) {
+            if (line.equals("") || line == null) {
                 break;
             }
             List<String> tokens = Arrays.asList(line.split(","));
